@@ -53,13 +53,14 @@ export const metadata: Metadata = {
     siteName: "i3Hub",
     images: [
       {
-        url: "/og-image.png", // put this in /public
-        width: 500,
-        height: 500,
-        alt: "i3Hub Logo",
+        url: "/og-image.png", // This is the key for WhatsApp
+        width: 1200, // Recommended size for better quality
+        height: 630, // Standard OG image ratio (1.91:1)
+        alt: "i3Hub - AI-Assisted Coding Education",
       },
     ],
     type: "website",
+    locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
