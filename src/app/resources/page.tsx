@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, Variants } from "framer-motion";
 import {
   BookOpen,
@@ -81,7 +82,7 @@ export default function ResourcesPage() {
       readTime: "15 min read",
       author: "Sarah Chen",
       date: "May 15, 2023",
-      image:
+      Image:
         "https://images.unsplash.com/photo-1555949963-aa79dcee981c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
       tags: ["Beginner", "AI Tools", "Productivity"],
     },
@@ -94,7 +95,7 @@ export default function ResourcesPage() {
       readTime: "25 min read",
       author: "Marcus Johnson",
       date: "June 2, 2023",
-      image:
+      Image:
         "https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
       tags: ["React", "ChatGPT", "Full-Stack"],
     },
@@ -107,7 +108,7 @@ export default function ResourcesPage() {
       readTime: "10 min read",
       author: "Alex Rivera",
       date: "April 28, 2023",
-      image:
+      Image:
         "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
       tags: ["Future", "AI", "Industry Trends"],
     },
@@ -120,7 +121,7 @@ export default function ResourcesPage() {
       readTime: "18 min read",
       author: "TechStart Inc.",
       date: "July 12, 2023",
-      image:
+      Image:
         "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
       tags: ["Case Study", "Productivity", "Startup"],
     },
@@ -133,7 +134,7 @@ export default function ResourcesPage() {
       readTime: "12 min read",
       author: "Jamie Zhang",
       date: "May 30, 2023",
-      image:
+      Image:
         "https://images.unsplash.com/photo-1542831371-29b0f74f9713?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
       tags: ["Prompt Engineering", "Best Practices", "AI Assistants"],
     },
@@ -146,7 +147,7 @@ export default function ResourcesPage() {
       readTime: "20 min read",
       author: "David Kim",
       date: "June 18, 2023",
-      image:
+      Image:
         "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
       tags: ["Debugging", "AI Tools", "Productivity"],
     },
@@ -184,7 +185,7 @@ export default function ResourcesPage() {
             </div>
             <div className="flex items-center space-x-4">
               <Link
-                href="/"
+                href="/dashboard"
                 className="text-blue-600 hover:text-blue-700 text-sm font-medium"
               >
                 Back to Home
@@ -273,11 +274,15 @@ export default function ResourcesPage() {
                   variants={itemVariants}
                   className="bg-white/80 backdrop-blur-sm rounded-3xl overflow-hidden border border-white/50 shadow-lg hover:shadow-xl transition-all duration-300"
                 >
-                  <div className="h-48 overflow-hidden">
-                    <img
-                      src={resource.image}
+                  <div>
+                    <Image
+                      src={resource.Image}
                       alt={resource.title}
                       className="w-full h-full object-cover"
+                      width={600}
+                      height={192}
+                      style={{ objectFit: "cover" }}
+                      priority
                     />
                   </div>
                   <div className="p-6">
