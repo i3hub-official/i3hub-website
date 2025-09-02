@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { motion, Variants } from "framer-motion";
 import {
   AlertTriangle,
   Lightbulb,
@@ -13,7 +14,7 @@ import {
   Target,
   ChevronRight,
   } from "lucide-react";
-import { motion, Variants } from "framer-motion";
+
 
 // Animation variants
 
