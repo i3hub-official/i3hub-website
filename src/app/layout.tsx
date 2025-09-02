@@ -85,7 +85,7 @@ export default function RootLayout({
               />
             </div>
 
-            <p className="text-lg font-semibold mb-2">i3Hub</p>
+            {/* <p className="text-lg font-semibold mb-2">i3Hub</p> */}
             <p className="text-secondary mb-4">
               Innovate · Integrate · Inspire
             </p>
