@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { motion, Variants } from "framer-motion";
 import {
   Code2,
   Bot,
@@ -9,6 +12,41 @@ import {
   ArrowRight,
   Play,
 } from "lucide-react";
+
+// ✅ Fixed Animation Variants with proper typing
+export const fadeIn: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: [0.42, 0, 0.58, 1], // cubic-bezier for easeInOut
+    },
+  },
+};
+
+export const containerVariants: Variants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.2,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+export const fadeInUp: Variants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      ease: [0.25, 1, 0.5, 1], // easeOut curve
+    },
+  },
+};
 
 export default function Home() {
   const stats = [
@@ -62,10 +100,16 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
       <div className="container mx-auto px-6 py-20 max-w-7xl">
-        {/* Hero Section - Remove any white backgrounds */}
+        {/* Hero Section - fade in together */}
         <section className="min-h-[100vh] flex items-center justify-center relative px-6 bg-transparent">
           <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-cyan-600/10 rounded-3xl blur-3xl"></div>
-          <div className="relative z-10 text-center max-w-7xl mx-auto">
+
+          <motion.div
+            className="relative z-10 text-center max-w-7xl mx-auto"
+            variants={fadeIn}
+            initial="hidden"
+            animate="visible"
+          >
             {/* Subtle Badge */}
             <div className="inline-flex items-center px-6 py-2 mb-8 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-semibold tracking-wide">
               <Sparkles className="w-4 h-4 mr-2" />
@@ -131,13 +175,19 @@ export default function Home() {
                 </div>
               ))}
             </div>
-          </div>
+          </motion.div>
         </section>
 
-        {/* Value Proposition Section - Make background transparent */}
+        {/* Value Proposition Section - staggered cards */}
         <section className="py-20 relative bg-transparent">
           <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 rounded-3xl blur-2xl"></div>
-          <div className="relative z-10 container mx-auto px-6 max-w-7xl">
+          <motion.div
+            className="relative z-10 container mx-auto px-6 max-w-7xl"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+          >
             <h2 className="text-4xl md:text-5xl font-black text-center mb-16">
               <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
                 Why The i3Hub Method Works
@@ -146,8 +196,9 @@ export default function Home() {
 
             <div className="grid md:grid-cols-3 gap-8">
               {valueProps.map((prop, index) => (
-                <div
+                <motion.div
                   key={index}
+                  variants={fadeInUp}
                   className={`group relative p-8 bg-gradient-to-br ${prop.bgGradient} backdrop-blur-sm rounded-3xl border border-white/50 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2`}
                 >
                   <div
@@ -169,39 +220,10 @@ export default function Home() {
                       {prop.description}
                     </p>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
-          </div>
-        </section>
-
-        {/* CTA Section - Make background transparent */}
-        <section className="py-20 relative bg-transparent">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10 rounded-3xl blur-2xl"></div>
-          <div className="relative z-10 container mx-auto px-6 text-center max-w-4xl">
-            <h2 className="text-4xl md:text-5xl font-black mb-8">
-              <span className="bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 bg-clip-text text-transparent">
-                Ready to Transform
-              </span>
-              <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent block mt-2">
-                How You Code?
-              </span>
-            </h2>
-
-            <p className="text-xl text-slate-600 mb-12 max-w-2xl mx-auto leading-relaxed">
-              Stop struggling with memorization. Start building with
-              intelligence.
-            </p>
-
-            <Link
-              href="/tools"
-              className="group inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
-            >
-              <Sparkles className="w-5 h-5 mr-3" />
-              Get Started with Free Tools
-              <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </div>
+          </motion.div>
         </section>
       </div>
     </div>
