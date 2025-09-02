@@ -41,7 +41,7 @@ const itemVariants: Variants = {
   },
 };
 
-export default function LoginPage() {
+export default function SigninPage() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
