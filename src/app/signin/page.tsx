@@ -126,8 +126,6 @@ export default function LoginPage() {
             variants={containerVariants}
             className="relative"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-cyan-600/10 rounded-3xl blur-3xl -z-10"></div>
-
             <div className="text-center mb-8">
               <motion.div
                 variants={itemVariants}
@@ -169,10 +167,10 @@ export default function LoginPage() {
 
               <div className="relative my-6">
                 <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-slate-300"></div>
+                  <div className="w-full border-t  border-slate-300"></div>
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-2 mt-5 bg-transparent text-slate-500">
+                  <span className="px-2 bg-slate-100 text-slate-500">
                     Or continue with email
                   </span>
                 </div>

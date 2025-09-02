@@ -9,10 +9,36 @@ import {
   Users,
   ArrowRight,
   Play,
+  X,
+  Mail,
+  Lock,
+  Eye,
+  EyeOff,
+  User,
+  Github,
+  Chrome,
 } from "lucide-react";
 
 export default function Home() {
   const [visibleSections, setVisibleSections] = useState(new Set());
+  const [showSignupModal, setShowSignupModal] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const [loginData, setLoginData] = useState({
+    email: "",
+    password: "",
+  });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [loginErrors, setLoginErrors] = useState<Record<string, string>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoginSubmitting, setIsLoginSubmitting] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -87,8 +113,511 @@ export default function Home() {
     },
   ];
 
+  const handleSignupChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    if (errors[name]) {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: "",
+      }));
+    }
+  };
+
+  const handleLoginChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setLoginData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    if (loginErrors[name]) {
+      setLoginErrors((prev) => ({
+        ...prev,
+        [name]: "",
+      }));
+    }
+  };
+
+  const validateSignupForm = () => {
+    const newErrors: Record<string, string> = {};
+
+    if (!formData.name.trim()) {
+      newErrors.name = "Name is required";
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Email is invalid";
+    }
+
+    if (!formData.password) {
+      newErrors.password = "Password is required";
+    } else if (formData.password.length < 8) {
+      newErrors.password = "Password must be at least 8 characters";
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = "Passwords do not match";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const validateLoginForm = () => {
+    const newErrors: Record<string, string> = {};
+
+    if (!loginData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(loginData.email)) {
+      newErrors.email = "Email is invalid";
+    }
+
+    if (!loginData.password) {
+      newErrors.password = "Password is required";
+    }
+
+    setLoginErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSignupSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (validateSignupForm()) {
+      setIsSubmitting(true);
+      // Simulate API call
+      setTimeout(() => {
+        setIsSubmitting(false);
+        alert("Signup successful! Welcome to i3Hub.");
+        setShowSignupModal(false);
+        setFormData({
+          name: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+        });
+      }, 1500);
+    }
+  };
+
+  const handleLoginSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (validateLoginForm()) {
+      setIsLoginSubmitting(true);
+      // Simulate API call
+      setTimeout(() => {
+        setIsLoginSubmitting(false);
+        alert("Login successful! Welcome back to i3Hub.");
+        setShowLoginModal(false);
+        setLoginData({
+          email: "",
+          password: "",
+        });
+      }, 1500);
+    }
+  };
+
+  const handleSocialLogin = (provider: string) => {
+    alert(`Logging in with ${provider}`);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 overflow-hidden">
+      {/* Signup Modal */}
+      {showSignupModal && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl p-6 w-full max-w-md relative">
+            <button
+              onClick={() => setShowSignupModal(false)}
+              className="absolute top-4 right-4 text-slate-500 hover:text-slate-700"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            <div className="text-center mb-6">
+              <h2 className="text-2xl font-bold text-slate-800 mb-2">
+                Create Account
+              </h2>
+              <p className="text-slate-600">Join the i3Hub community</p>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 mb-6">
+              <button
+                onClick={() => handleSocialLogin("GitHub")}
+                className="flex items-center justify-center px-4 py-2 border border-slate-300 rounded-xl text-slate-700 bg-white hover:bg-slate-50 transition-colors"
+              >
+                <Github className="w-5 h-5 mr-2" />
+                GitHub
+              </button>
+              <button
+                onClick={() => handleSocialLogin("Google")}
+                className="flex items-center justify-center px-4 py-2 border border-slate-300 rounded-xl text-slate-700 bg-white hover:bg-slate-50 transition-colors"
+              >
+                <Chrome className="w-5 h-5 mr-2" />
+                Google
+              </button>
+            </div>
+
+            <div className="relative my-6">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-slate-300"></div>
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-2 bg-white text-slate-500">
+                  Or continue with email
+                </span>
+              </div>
+            </div>
+
+            <form onSubmit={handleSignupSubmit} className="space-y-4">
+              <div>
+                <label
+                  htmlFor="name"
+                  className="block text-sm font-medium text-slate-700 mb-1"
+                >
+                  Full Name
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <User className="h-5 w-5 text-slate-400" />
+                  </div>
+                  <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    value={formData.name}
+                    onChange={handleSignupChange}
+                    className={`block w-full pl-10 pr-3 py-2 border rounded-xl focus:ring-2 focus:outline-none ${
+                      errors.name
+                        ? "border-red-300 focus:ring-red-500"
+                        : "border-slate-300 focus:ring-blue-500"
+                    }`}
+                    placeholder="Enter your name"
+                  />
+                </div>
+                {errors.name && (
+                  <p className="mt-1 text-sm text-red-600">{errors.name}</p>
+                )}
+              </div>
+
+              <div>
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-slate-700 mb-1"
+                >
+                  Email Address
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <Mail className="h-5 w-5 text-slate-400" />
+                  </div>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleSignupChange}
+                    className={`block w-full pl-10 pr-3 py-2 border rounded-xl focus:ring-2 focus:outline-none ${
+                      errors.email
+                        ? "border-red-300 focus:ring-red-500"
+                        : "border-slate-300 focus:ring-blue-500"
+                    }`}
+                    placeholder="you@example.com"
+                  />
+                </div>
+                {errors.email && (
+                  <p className="mt-1 text-sm text-red-600">{errors.email}</p>
+                )}
+              </div>
+
+              <div>
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium text-slate-700 mb-1"
+                >
+                  Password
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <Lock className="h-5 w-5 text-slate-400" />
+                  </div>
+                  <input
+                    id="password"
+                    name="password"
+                    type={showPassword ? "text" : "password"}
+                    value={formData.password}
+                    onChange={handleSignupChange}
+                    className={`block w-full pl-10 pr-10 py-2 border rounded-xl focus:ring-2 focus:outline-none ${
+                      errors.password
+                        ? "border-red-300 focus:ring-red-500"
+                        : "border-slate-300 focus:ring-blue-500"
+                    }`}
+                    placeholder="At least 8 characters"
+                  />
+                  <button
+                    type="button"
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? (
+                      <EyeOff className="h-5 w-5 text-slate-400" />
+                    ) : (
+                      <Eye className="h-5 w-5 text-slate-400" />
+                    )}
+                  </button>
+                </div>
+                {errors.password && (
+                  <p className="mt-1 text-sm text-red-600">{errors.password}</p>
+                )}
+              </div>
+
+              <div>
+                <label
+                  htmlFor="confirmPassword"
+                  className="block text-sm font-medium text-slate-700 mb-1"
+                >
+                  Confirm Password
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <Lock className="h-5 w-5 text-slate-400" />
+                  </div>
+                  <input
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    type={showConfirmPassword ? "text" : "password"}
+                    value={formData.confirmPassword}
+                    onChange={handleSignupChange}
+                    className={`block w-full pl-10 pr-10 py-2 border rounded-xl focus:ring-2 focus:outline-none ${
+                      errors.confirmPassword
+                        ? "border-red-300 focus:ring-red-500"
+                        : "border-slate-300 focus:ring-blue-500"
+                    }`}
+                    placeholder="Confirm your password"
+                  />
+                  <button
+                    type="button"
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  >
+                    {showConfirmPassword ? (
+                      <EyeOff className="h-5 w-5 text-slate-400" />
+                    ) : (
+                      <Eye className="h-5 w-5 text-slate-400" />
+                    )}
+                  </button>
+                </div>
+                {errors.confirmPassword && (
+                  <p className="mt-1 text-sm text-red-600">
+                    {errors.confirmPassword}
+                  </p>
+                )}
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full flex justify-center items-center py-2 px-4 border border-transparent rounded-xl text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 disabled:opacity-75"
+              >
+                {isSubmitting ? "Creating Account..." : "Create Account"}
+              </button>
+            </form>
+
+            <div className="text-center mt-4 text-sm text-slate-600">
+              Already have an account?{" "}
+              <button
+                onClick={() => {
+                  setShowSignupModal(false);
+                  setShowLoginModal(true);
+                }}
+                className="text-blue-600 hover:text-blue-700 font-medium"
+              >
+                Sign in
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Login Modal */}
+      {showLoginModal && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl p-6 w-full max-w-md relative">
+            <button
+              onClick={() => setShowLoginModal(false)}
+              className="absolute top-4 right-4 text-slate-500 hover:text-slate-700"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            <div className="text-center mb-6">
+              <h2 className="text-2xl font-bold text-slate-800 mb-2">
+                Welcome Back
+              </h2>
+              <p className="text-slate-600">Sign in to your i3Hub account</p>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 mb-6">
+              <button
+                onClick={() => handleSocialLogin("GitHub")}
+                className="flex items-center justify-center px-4 py-2 border border-slate-300 rounded-xl text-slate-700 bg-white hover:bg-slate-50 transition-colors"
+              >
+                <Github className="w-5 h-5 mr-2" />
+                GitHub
+              </button>
+              <button
+                onClick={() => handleSocialLogin("Google")}
+                className="flex items-center justify-center px-4 py-2 border border-slate-300 rounded-xl text-slate-700 bg-white hover:bg-slate-50 transition-colors"
+              >
+                <Chrome className="w-5 h-5 mr-2" />
+                Google
+              </button>
+            </div>
+
+            <div className="relative my-6">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-slate-300"></div>
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-2 bg-white text-slate-500">
+                  Or continue with email
+                </span>
+              </div>
+            </div>
+
+            <form onSubmit={handleLoginSubmit} className="space-y-4">
+              <div>
+                <label
+                  htmlFor="loginEmail"
+                  className="block text-sm font-medium text-slate-700 mb-1"
+                >
+                  Email Address
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <Mail className="h-5 w-5 text-slate-400" />
+                  </div>
+                  <input
+                    id="loginEmail"
+                    name="email"
+                    type="email"
+                    value={loginData.email}
+                    onChange={handleLoginChange}
+                    className={`block w-full pl-10 pr-3 py-2 border rounded-xl focus:ring-2 focus:outline-none ${
+                      loginErrors.email
+                        ? "border-red-300 focus:ring-red-500"
+                        : "border-slate-300 focus:ring-blue-500"
+                    }`}
+                    placeholder="you@example.com"
+                  />
+                </div>
+                {loginErrors.email && (
+                  <p className="mt-1 text-sm text-red-600">
+                    {loginErrors.email}
+                  </p>
+                )}
+              </div>
+
+              <div>
+                <label
+                  htmlFor="loginPassword"
+                  className="block text-sm font-medium text-slate-700 mb-1"
+                >
+                  Password
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <Lock className="h-5 w-5 text-slate-400" />
+                  </div>
+                  <input
+                    id="loginPassword"
+                    name="password"
+                    type={showPassword ? "text" : "password"}
+                    value={loginData.password}
+                    onChange={handleLoginChange}
+                    className={`block w-full pl-10 pr-10 py-2 border rounded-xl focus:ring-2 focus:outline-none ${
+                      loginErrors.password
+                        ? "border-red-300 focus:ring-red-500"
+                        : "border-slate-300 focus:ring-blue-500"
+                    }`}
+                    placeholder="Enter your password"
+                  />
+                  <button
+                    type="button"
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? (
+                      <EyeOff className="h-5 w-5 text-slate-400" />
+                    ) : (
+                      <Eye className="h-5 w-5 text-slate-400" />
+                    )}
+                  </button>
+                </div>
+                {loginErrors.password && (
+                  <p className="mt-1 text-sm text-red-600">
+                    {loginErrors.password}
+                  </p>
+                )}
+              </div>
+
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <input
+                    id="rememberMe"
+                    name="rememberMe"
+                    type="checkbox"
+                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300 rounded"
+                  />
+                  <label
+                    htmlFor="rememberMe"
+                    className="ml-2 block text-sm text-slate-700"
+                  >
+                    Remember me
+                  </label>
+                </div>
+
+                <div className="text-sm">
+                  <a
+                    href="/forgotpassword"
+                    className="font-medium text-blue-600 hover:text-blue-500"
+                  >
+                    Forgot your password?
+                  </a>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                disabled={isLoginSubmitting}
+                className="w-full flex justify-center items-center py-2 px-4 border border-transparent rounded-xl text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 disabled:opacity-75"
+              >
+                {isLoginSubmitting ? "Signing In..." : "Sign In"}
+              </button>
+            </form>
+
+            <div className="text-center mt-4 text-sm text-slate-600">
+              Don&apos;t have an account?{" "}
+              <button
+                onClick={() => {
+                  setShowLoginModal(false);
+                  setShowSignupModal(true);
+                }}
+                className="text-blue-600 hover:text-blue-700 font-medium"
+              >
+                Sign up
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Hero Section */}
       <section
         className="min-h-screen flex items-center justify-center relative px-4 sm:px-6 lg:px-8"
@@ -128,16 +657,22 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center mb-12 sm:mb-16">
-            <button className="group relative px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 w-full sm:w-auto">
+            <button
+              onClick={() => setShowSignupModal(true)}
+              className="group relative px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 w-full sm:w-auto"
+            >
               <span className="relative z-10 flex items-center justify-center">
                 <Play className="w-5 h-5 mr-3" />
                 Start Learning Free
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
               </span>
             </button>
-            <button className="group relative px-6 sm:px-8 py-3 sm:py-4 border-2 border-blue-600 text-blue-600 font-semibold rounded-xl hover:bg-blue-600 hover:text-white transition-all duration-300 hover:scale-105 w-full sm:w-auto">
+            <button
+              onClick={() => setShowLoginModal(true)}
+              className="group relative px-6 sm:px-8 py-3 sm:py-4 border-2 border-blue-600 text-blue-600 font-semibold rounded-xl hover:bg-blue-600 hover:text-white transition-all duration-300 hover:scale-105 w-full sm:w-auto"
+            >
               <span className="relative z-10 flex items-center justify-center">
-                Explore The Method
+                Sign In
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
               </span>
             </button>
@@ -254,16 +789,22 @@ export default function Home() {
               assistance
             </p>
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center">
-              <button className="group relative px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 w-full sm:w-auto">
+              <button
+                onClick={() => setShowSignupModal(true)}
+                className="group relative px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 w-full sm:w-auto"
+              >
                 <span className="relative z-10 flex items-center justify-center">
                   <Sparkles className="w-5 h-5 mr-3" />
                   Get Started Today
                   <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                 </span>
               </button>
-              <button className="group relative px-6 sm:px-8 py-3 sm:py-4 bg-white/70 backdrop-blur-sm border-2 border-slate-200 text-slate-800 font-semibold rounded-xl hover:bg-white hover:shadow-xl transition-all duration-300 hover:scale-105 w-full sm:w-auto">
+              <button
+                onClick={() => setShowLoginModal(true)}
+                className="group relative px-6 sm:px-8 py-3 sm:py-4 bg-white/70 backdrop-blur-sm border-2 border-slate-200 text-slate-800 font-semibold rounded-xl hover:bg-white hover:shadow-xl transition-all duration-300 hover:scale-105 w-full sm:w-auto"
+              >
                 <span className="relative z-10 flex items-center justify-center">
-                  Learn More
+                  Sign In
                   <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                 </span>
               </button>
