@@ -196,7 +196,8 @@ export default function ModernVideosPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
-      <div className="container mx-auto px-6 py-20 max-w-7xl">
+      <div className="container mx-auto px-6 sm:px-6 lg:px-8 py-24 sm:py-20 max-w-7xl">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-cyan-600/10 rounded-3xl blur-3xl"></div>
         {/* Hero Section */}
         <motion.div
           variants={fadeInVariants}

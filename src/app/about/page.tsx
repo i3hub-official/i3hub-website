@@ -111,8 +111,10 @@ export default function ModernAboutPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 overflow-hidden">
       {/* Hero Section */}
-      <section className="relative py-24 px-6" data-section="0">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-cyan-600/10 rounded-3xl blur-3xl"></div>
+      <section
+        className="container mx-auto px-6 sm:px-6 lg:px-8 py-24 sm:py-20 max-w-7xl"
+        data-section="0"
+      >
         <div className="container mx-auto max-w-6xl relative">
           <motion.div
             initial="hidden"
@@ -120,14 +122,16 @@ export default function ModernAboutPage() {
             variants={containerVariants}
             className="text-center"
           >
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-cyan-600/10 rounded-3xl blur-3xl"></div>
             <motion.div
               variants={itemVariants}
-              className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 border border-blue-200/50 mb-8"
+              className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent text-sm font-semibold tracking-wide uppercase"
             >
-              <Sparkles className="w-4 h-4 text-blue-600 mr-2" />
-              <span className="text-sm font-semibold text-blue-800">
-                Our Story
-              </span>
+              <div className="inline-block mb-4">
+                <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent text-sm font-semibold tracking-wide uppercase">
+                  Our Story
+                </span>
+              </div>
             </motion.div>
 
             <motion.h1

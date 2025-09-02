@@ -13,15 +13,11 @@ import {
 } from "lucide-react";
 import { motion, Variants } from "framer-motion";
 
-// Animation Variants
+// Animation variants
 const containerVariants: Variants = {
-  hidden: { opacity: 0 },
+  hidden: {},
   visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.2,
-    },
+    transition: { staggerChildren: 0.15, delayChildren: 0.2 },
   },
 };
 
@@ -30,9 +26,18 @@ const fadeInVariants: Variants = {
   visible: {
     opacity: 1,
     y: 0,
+    transition: { duration: 0.6, ease: [0.42, 0, 0.58, 1] },
+  },
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
     transition: {
       duration: 0.6,
-      ease: [0.42, 0, 0.58, 1],
+      ease: "easeOut",
     },
   },
 };
@@ -48,6 +53,11 @@ export default function ModernToolsPage() {
       linkText: "Download VSCode",
       gradient: "from-blue-500 to-cyan-500",
       bgGradient: "from-blue-50 to-cyan-50",
+      hoverGradient: "hover:from-blue-500/5 hover:to-cyan-500/5",
+      extraLink: {
+        text: "Or use vscode.dev in the browser — zero installation",
+        url: "https://vscode.dev/",
+      },
     },
     {
       icon: <Bot className="w-12 h-12" />,
@@ -60,6 +70,7 @@ export default function ModernToolsPage() {
       ],
       gradient: "from-purple-500 to-pink-500",
       bgGradient: "from-purple-50 to-pink-50",
+      hoverGradient: "hover:from-purple-500/5 hover:to-pink-500/5",
     },
     {
       icon: <GitBranch className="w-12 h-12" />,
@@ -75,6 +86,7 @@ export default function ModernToolsPage() {
       linkText: "Download GitHub Desktop",
       gradient: "from-green-500 to-emerald-500",
       bgGradient: "from-green-50 to-emerald-50",
+      hoverGradient: "hover:from-green-500/5 hover:to-emerald-500/5",
     },
     {
       icon: <Terminal className="w-12 h-12" />,
@@ -86,6 +98,7 @@ export default function ModernToolsPage() {
       linkText: "Install Git (CLI)",
       gradient: "from-orange-500 to-red-500",
       bgGradient: "from-orange-50 to-red-50",
+      hoverGradient: "hover:from-orange-500/5 hover:to-red-500/5",
     },
     {
       icon: <Globe className="w-12 h-12" />,
@@ -97,6 +110,7 @@ export default function ModernToolsPage() {
       ],
       gradient: "from-indigo-500 to-blue-500",
       bgGradient: "from-indigo-50 to-blue-50",
+      hoverGradient: "hover:from-indigo-500/5 hover:to-blue-500/5",
     },
     {
       icon: <Sparkles className="w-12 h-12" />,
@@ -106,6 +120,7 @@ export default function ModernToolsPage() {
       note: "Stay tuned!",
       gradient: "from-violet-500 to-purple-500",
       bgGradient: "from-violet-50 to-purple-50",
+      hoverGradient: "hover:from-violet-500/5 hover:to-purple-500/5",
     },
   ];
 
@@ -137,78 +152,82 @@ export default function ModernToolsPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
-      <div className="container mx-auto px-6 py-20 max-w-7xl">
-        {/* Hero Section with animation */}
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 overflow-hidden">
+      <div className="container mx-auto px-6 sm:px-6 lg:px-8 py-24 sm:py-20 max-w-7xl">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-cyan-600/10 rounded-3xl blur-3xl"></div>
+        {/* Hero Section */}
         <motion.div
-          className="text-center mb-20 relative"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeInVariants}
+          viewport={{ once: true, margin: "-100px" }}
+          variants={containerVariants}
+          className="text-center mb-16 sm:mb-20 relative"
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-cyan-600/10 rounded-3xl blur-3xl"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-cyan-600/10 rounded-3xl blur-3xl -z-10"></div>
           <div className="relative">
-            <div className="inline-block mb-4">
+            <motion.div variants={itemVariants} className="inline-block mb-4">
               <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent text-sm font-semibold tracking-wide uppercase">
                 Build with AI
               </span>
-            </div>
-            <h1 className="text-5xl md:text-7xl font-black bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 bg-clip-text text-transparent mb-8 leading-tight">
+            </motion.div>
+            <motion.h1
+              variants={itemVariants}
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 bg-clip-text text-transparent mb-6 sm:mb-8 leading-tight"
+            >
               Essential Tools
-            </h1>
-            <p className="text-xl md:text-2xl text-slate-600 max-w-4xl mx-auto leading-relaxed">
+            </motion.h1>
+            <motion.p
+              variants={itemVariants}
+              className="text-lg sm:text-xl md:text-2xl text-slate-600 max-w-4xl mx-auto leading-relaxed px-4"
+            >
               Your launchpad for building with AI—
               <span className="font-semibold text-slate-800">
                 no memorization required
               </span>
               .
-            </p>
+            </motion.p>
           </div>
         </motion.div>
 
-        {/* Tools Grid with stagger animation */}
+        {/* Tools Grid */}
         <motion.div
-          className="grid lg:grid-cols-3 md:grid-cols-2 gap-8 mb-24"
-          variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: true, margin: "-100px" }}
+          variants={containerVariants}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-16 sm:mb-24"
         >
           {tools.map((tool, index) => (
             <motion.div
               key={index}
-              variants={fadeInVariants}
-              className={`group relative p-8 bg-gradient-to-br ${tool.bgGradient} backdrop-blur-sm rounded-3xl border border-white/50 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden`}
+              variants={itemVariants}
+              className={`group relative p-6 sm:p-8 bg-gradient-to-br ${tool.bgGradient} ${tool.hoverGradient} backdrop-blur-sm rounded-2xl sm:rounded-3xl border border-white/50 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden`}
             >
               <div
-                className={`absolute inset-0 bg-gradient-to-br ${tool.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}
+                className={`absolute inset-0 bg-gradient-to-br ${tool.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300 rounded-2xl sm:rounded-3xl`}
               ></div>
-
-              <div className="relative z-10">
+              <div className="relative z-10 text-center flex flex-col items-center">
                 <div
-                  className={`inline-flex p-3 rounded-2xl bg-gradient-to-br ${tool.gradient} text-white mb-6 group-hover:scale-110 transition-transform duration-300`}
+                  className={`inline-flex p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-gradient-to-br ${tool.gradient} text-white mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300`}
                 >
                   {tool.icon}
                 </div>
-
-                <h2 className="text-2xl font-bold text-slate-800 mb-4 group-hover:text-slate-900 transition-colors">
+                <h2 className="text-xl sm:text-2xl font-bold text-slate-800 mb-3 sm:mb-4 group-hover:text-slate-900 transition-colors">
                   {tool.title}
                 </h2>
-
-                <p className="text-slate-600 mb-6 leading-relaxed">
+                <p className="text-slate-600 mb-4 leading-relaxed text-sm sm:text-base">
                   {tool.description}
                 </p>
 
                 {tool.features && (
-                  <ul className="space-y-2 mb-6">
+                  <ul className="space-y-2 mb-6 w-full">
                     {tool.features.map((feature, i) => (
                       <li
                         key={i}
-                        className="flex items-center text-sm text-slate-600"
+                        className="flex items-center text-sm text-slate-600 justify-start"
                       >
                         <div
-                          className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${tool.gradient} mr-3`}
+                          className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${tool.gradient} mr-3 flex-shrink-0`}
                         ></div>
                         {feature}
                       </li>
@@ -217,12 +236,14 @@ export default function ModernToolsPage() {
                 )}
 
                 {tool.subLinks && (
-                  <div className="flex flex-wrap gap-3 mb-6">
+                  <div className="flex flex-wrap gap-2 sm:gap-3 mb-6 justify-center">
                     {tool.subLinks.map((subLink, i) => (
                       <a
                         key={i}
                         href={subLink.url}
-                        className={`inline-flex items-center px-4 py-2 rounded-xl bg-gradient-to-r ${tool.gradient} text-white text-sm font-medium hover:shadow-lg transition-all duration-200 hover:scale-105`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`inline-flex items-center px-3 sm:px-4 py-2 rounded-lg sm:rounded-xl bg-gradient-to-r ${tool.gradient} text-white text-xs sm:text-sm font-medium hover:shadow-lg transition-all duration-200 hover:scale-105`}
                       >
                         {subLink.name}
                         <ExternalLink className="w-3 h-3 ml-2" />
@@ -231,21 +252,34 @@ export default function ModernToolsPage() {
                   </div>
                 )}
 
-                {tool.note && (
-                  <p className="text-sm text-slate-500 mb-6 italic">
-                    {tool.note}
-                  </p>
-                )}
-
                 {tool.link && (
                   <a
                     href={tool.link}
-                    className={`inline-flex items-center px-6 py-3 rounded-xl bg-gradient-to-r ${tool.gradient} text-white font-semibold hover:shadow-lg transition-all duration-200 hover:scale-105 group/link`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 rounded-lg sm:rounded-xl bg-gradient-to-r ${tool.gradient} text-white font-semibold hover:shadow-lg transition-all duration-200 hover:scale-105 group/link mb-2 text-sm sm:text-base`}
                   >
                     <Download className="w-4 h-4 mr-2" />
                     {tool.linkText}
                     <ArrowRight className="w-4 h-4 ml-2 group-hover/link:translate-x-1 transition-transform" />
                   </a>
+                )}
+
+                {tool.extraLink && (
+                  <a
+                    href={tool.extraLink.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs sm:text-sm text-blue-600 hover:underline mt-1 inline-block px-2 text-center"
+                  >
+                    {tool.extraLink.text}
+                  </a>
+                )}
+
+                {tool.note && (
+                  <p className="text-sm text-slate-500 mb-6 italic">
+                    {tool.note}
+                  </p>
                 )}
               </div>
             </motion.div>
@@ -254,53 +288,46 @@ export default function ModernToolsPage() {
 
         {/* Workflow Section */}
         <motion.div
-          className="relative"
-          variants={fadeInVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeInVariants}
+          className="relative"
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 rounded-3xl blur-2xl"></div>
-          <div className="relative bg-white/70 backdrop-blur-sm rounded-3xl border border-white/50 p-12 shadow-xl">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl font-black bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-4">
+          <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 rounded-2xl sm:rounded-3xl blur-2xl -z-10"></div>
+          <div className="relative bg-white/70 backdrop-blur-sm rounded-2xl sm:rounded-3xl border border-white/50 p-6 sm:p-12 shadow-xl">
+            <div className="text-center mb-8 sm:mb-12">
+              <h2 className="text-3xl sm:text-4xl font-black bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-4">
                 Recommended Workflow
               </h2>
-              <p className="text-slate-600 text-lg">
+              <p className="text-slate-600 text-base sm:text-lg">
                 Follow this battle-tested sequence for maximum productivity
               </p>
             </div>
-
-            <motion.div
-              className="grid md:grid-cols-2 lg:grid-cols-4 gap-8"
-              variants={containerVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.2 }}
-            >
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
               {workflowSteps.map((step, index) => (
                 <motion.div
                   key={index}
-                  className="text-center group"
-                  variants={fadeInVariants}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 + 0.3, duration: 0.5 }}
+                  className="text-center group relative"
                 >
                   <div className="relative mb-6">
-                    <div className="inline-flex w-16 h-16 items-center justify-center rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 text-slate-800 font-bold text-lg mb-4 group-hover:scale-110 transition-transform duration-200">
+                    <div className="inline-flex w-12 sm:w-16 h-12 sm:h-16 items-center justify-center rounded-xl sm:rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 text-slate-800 font-bold text-base sm:text-lg mb-4 group-hover:scale-110 transition-transform duration-200">
                       {step.number}
                     </div>
-
                     {index < workflowSteps.length - 1 && (
-                      <div className="hidden lg:block absolute top-8 left-full w-full h-0.5 bg-gradient-to-r from-indigo-200 to-purple-200 -z-10"></div>
+                      <div className="hidden lg:block absolute top-6 sm:top-8 left-full w-full h-0.5 bg-gradient-to-r from-indigo-200 to-purple-200 -z-10"></div>
                     )}
                   </div>
-
                   <div className="flex items-center justify-center mb-3">
-                    <div className="p-2 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-500 text-white">
+                    <div className="p-2 rounded-lg sm:rounded-xl bg-gradient-to-br from-indigo-500 to-purple-500 text-white">
                       {step.icon}
                     </div>
                   </div>
-
-                  <h3 className="text-xl font-bold text-slate-800 mb-2">
+                  <h3 className="text-lg sm:text-xl font-bold text-slate-800 mb-2">
                     {step.title}
                   </h3>
                   <p className="text-slate-600 text-sm leading-relaxed">
@@ -308,23 +335,26 @@ export default function ModernToolsPage() {
                   </p>
                 </motion.div>
               ))}
-            </motion.div>
+            </div>
           </div>
         </motion.div>
 
         {/* Call to action */}
         <motion.div
-          className="text-center mt-16"
-          variants={fadeInVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeInVariants}
+          className="text-center mt-12 sm:mt-16"
         >
-          <div className="inline-flex items-center px-8 py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold text-lg hover:shadow-xl transition-all duration-200 hover:scale-105 cursor-pointer">
-            <Sparkles className="w-5 h-5 mr-3" />
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            className="inline-flex items-center px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold text-base sm:text-lg hover:shadow-xl transition-all duration-200 hover:scale-105 cursor-pointer group"
+          >
+            <Sparkles className="w-4 sm:w-5 h-4 sm:h-5 mr-3" />
             Ready to build something amazing?
-            <ArrowRight className="w-5 h-5 ml-3" />
-          </div>
+            <ArrowRight className="w-4 sm:w-5 h-4 sm:h-5 ml-3 group-hover:translate-x-1 transition-transform" />
+          </button>
         </motion.div>
       </div>
     </div>
