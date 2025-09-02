@@ -270,7 +270,7 @@ export default function Home() {
                 </span>
               </a>
               <a
-                href="/login"
+                href="/signin"
                 className="group relative px-6 sm:px-8 py-3 sm:py-4 bg-white/70 backdrop-blur-sm border-2 border-slate-200 text-slate-800 font-semibold rounded-xl hover:bg-white hover:shadow-xl transition-all duration-300 hover:scale-105 w-full sm:w-auto text-center"
               >
                 <span className="relative z-10 flex items-center justify-center">
