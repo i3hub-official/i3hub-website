@@ -102,31 +102,28 @@ export default function RootLayout({
                 </div>
               </div>
 
-              {/* Explore Column */}
-              <div className="text-center md:text-left">
-                <h3 className="text-white font-semibold text-lg mb-6">
+              {/* Explore Column - Compact horizontal */}
+              <div className="text-center">
+                <h3 className="text-white font-semibold text-lg mb-4">
                   Explore
                 </h3>
-                <div className="space-y-4">
+                <div className="flex flex-row justify-center space-x-3">
                   <Link
                     href="/videos"
-                    className="flex items-center justify-center md:justify-start text-blue-300 hover:text-white transition-colors duration-300 group text-base"
+                    className="text-blue-300 hover:text-white transition-colors duration-300 text-sm font-medium px-3 py-1 rounded-md bg-blue-800/20 hover:bg-blue-700/30"
                   >
-                    <FiArrowRight className="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-opacity" />
                     Videos
                   </Link>
                   <Link
                     href="/tools"
-                    className="flex items-center justify-center md:justify-start text-blue-300 hover:text-white transition-colors duration-300 group text-base"
+                    className="text-blue-300 hover:text-white transition-colors duration-300 text-sm font-medium px-3 py-1 rounded-md bg-blue-800/20 hover:bg-blue-700/30"
                   >
-                    <FiArrowRight className="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-opacity" />
                     Tools
                   </Link>
                   <Link
                     href="/about"
-                    className="flex items-center justify-center md:justify-start text-blue-300 hover:text-white transition-colors duration-300 group text-base"
+                    className="text-blue-300 hover:text-white transition-colors duration-300 text-sm font-medium px-3 py-1 rounded-md bg-blue-800/20 hover:bg-blue-700/30"
                   >
-                    <FiArrowRight className="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-opacity" />
                     About
                   </Link>
                 </div>

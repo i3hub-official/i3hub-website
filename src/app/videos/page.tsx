@@ -6,9 +6,9 @@ import {
   TrendingUp,
   Sparkles,
   ArrowRight,
-  ExternalLink,
   Video,
 } from "lucide-react";
+import { FiArrowRight, FiYoutube } from "react-icons/fi";
 
 export default function ModernVideosPage() {
   const videoCategories = [
@@ -185,6 +185,17 @@ export default function ModernVideosPage() {
                 className={`absolute inset-0 bg-gradient-to-br ${category.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}
               ></div>
 
+              {/* Status badge (moved to top-right) */}
+              <div
+                className={`absolute top-4 right-4 inline-flex px-4 py-1.5 rounded-lg ${
+                  category.status === "Available Now"
+                    ? "bg-green-100 text-green-800"
+                    : "bg-blue-100 text-blue-800"
+                } text-xs font-medium shadow-sm`}
+              >
+                {category.status}
+              </div>
+
               <div className="relative z-10">
                 {/* Icon with gradient */}
                 <div
@@ -201,28 +212,17 @@ export default function ModernVideosPage() {
                   {category.description}
                 </p>
 
-                {/* Status badge */}
-                <div
-                  className={`inline-flex px-4 py-2 rounded-xl ${
-                    category.status === "Available Now"
-                      ? "bg-green-100 text-green-800"
-                      : "bg-blue-100 text-blue-800"
-                  } text-sm font-medium mb-6`}
-                >
-                  {category.status}
-                </div>
-
                 {/* Link/CTA */}
                 {category.link && (
                   <a
                     href={category.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`inline-flex items-center px-6 py-3 rounded-xl bg-gradient-to-r ${category.gradient} text-white font-semibold hover:shadow-lg transition-all duration-200 hover:scale-105 group/link`}
+                    className={`inline-flex items-center px-6 py-3 rounded-xl bg-gradient-to-r ${category.gradient} text-white font-semibold hover:shadow-lg transition-all duration-200 hover:scale-105 group/link mt-2`}
                   >
-                    <Youtube className="w-4 h-4 mr-2" />
+                    <FiYoutube className="w-4 h-4 mr-2" />
                     {category.linkText}
-                    <ExternalLink className="w-4 h-4 ml-2 group-hover/link:translate-x-1 transition-transform" />
+                    <FiArrowRight className="w-4 h-4 ml-2 group-hover/link:translate-x-1 transition-transform" />
                   </a>
                 )}
               </div>
