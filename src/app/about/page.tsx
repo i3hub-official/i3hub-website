@@ -10,13 +10,48 @@ import {
   ArrowRight,
   Play,
   Code,
-  Brain,
-  Zap,
   Target,
-  Star,
   ChevronRight,
   Sparkles,
 } from "lucide-react";
+import { motion, Variants } from "framer-motion";
+
+// Animation variants
+
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const fadeInVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: [0.42, 0, 0.58, 1], // ✅ proper cubic-bezier array (not string[])
+    },
+  },
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut", // ✅ string, not array
+    },
+  },
+};
 
 export default function ModernAboutPage() {
   const [activeSection, setActiveSection] = useState(0);
@@ -79,69 +114,86 @@ export default function ModernAboutPage() {
       <section className="relative py-24 px-6" data-section="0">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-cyan-600/10 rounded-3xl blur-3xl"></div>
         <div className="container mx-auto max-w-6xl relative">
-          <div
-            className={`text-center transform transition-all duration-1000 ${
-              isVisible
-                ? "translate-y-0 opacity-100"
-                : "translate-y-10 opacity-0"
-            }`}
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={containerVariants}
+            className="text-center"
           >
-            <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 border border-blue-200/50 mb-8">
+            <motion.div
+              variants={itemVariants}
+              className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 border border-blue-200/50 mb-8"
+            >
               <Sparkles className="w-4 h-4 text-blue-600 mr-2" />
               <span className="text-sm font-semibold text-blue-800">
                 Our Story
               </span>
-            </div>
+            </motion.div>
 
-            <h1 className="text-5xl md:text-7xl font-black bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 bg-clip-text text-transparent mb-8 leading-tight">
+            <motion.h1
+              variants={itemVariants}
+              className="text-5xl md:text-7xl font-black bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 bg-clip-text text-transparent mb-8 leading-tight"
+            >
               About i3Hub
-            </h1>
+            </motion.h1>
 
-            <p className="text-xl md:text-2xl text-slate-600 max-w-4xl mx-auto leading-relaxed">
+            <motion.p
+              variants={itemVariants}
+              className="text-xl md:text-2xl text-slate-600 max-w-4xl mx-auto leading-relaxed"
+            >
               Coding shouldn&apos;t feel like memorizing a dictionary.
               We&apos;re here to{" "}
               <span className="font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 rewrite how the next generation
               </span>{" "}
               learns to build with AI.
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
         </div>
       </section>
 
       {/* The Problem Section */}
       <section className="py-24 px-6" data-section="1">
         <div className="container mx-auto max-w-6xl">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={containerVariants}
+            className="grid lg:grid-cols-2 gap-16 items-center"
+          >
             {/* Content */}
             <div className="space-y-8">
-              <div className="flex items-center space-x-3 mb-6">
+              <motion.div
+                variants={itemVariants}
+                className="flex items-center space-x-3 mb-6"
+              >
                 <div className="p-3 rounded-2xl bg-gradient-to-br from-red-500 to-orange-500 text-white">
                   <AlertTriangle className="w-6 h-6" />
                 </div>
                 <h2 className="text-4xl font-black text-slate-800">
                   The Problem
                 </h2>
-              </div>
+              </motion.div>
 
               <div className="space-y-6 text-lg text-slate-700 leading-relaxed">
-                <p className="relative pl-6">
+                <motion.p variants={itemVariants} className="relative pl-6">
                   <span className="absolute left-0 top-3 w-2 h-2 bg-gradient-to-r from-red-500 to-orange-500 rounded-full"></span>
                   Traditional coding education is stuck in the past. Beginners
                   are told to memorize syntax, grind through tutorials, and copy
                   projects that never leave the classroom.
-                </p>
+                </motion.p>
 
-                <p className="relative pl-6">
+                <motion.p variants={itemVariants} className="relative pl-6">
                   <span className="absolute left-0 top-3 w-2 h-2 bg-gradient-to-r from-red-500 to-orange-500 rounded-full"></span>
                   Meanwhile, AI has already changed how real developers work.
                   The gap between learning and industry has never been wider.
-                </p>
+                </motion.p>
               </div>
             </div>
 
             {/* Visual Card */}
-            <div className="relative">
+            <motion.div variants={itemVariants} className="relative">
               <div className="absolute inset-0 bg-gradient-to-br from-red-500/20 to-orange-500/20 rounded-3xl blur-xl"></div>
               <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-10 border border-red-200/50 text-center shadow-xl">
                 <div className="text-8xl mb-6">⚡</div>
@@ -153,21 +205,33 @@ export default function ModernAboutPage() {
                   industry is already building for 2030?&quot;
                 </blockquote>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
       {/* The Spark Section */}
       <section className="py-24 px-6" data-section="2">
         <div className="container mx-auto max-w-6xl">
-          <div className="relative">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={fadeInVariants}
+            className="relative"
+          >
             <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 via-orange-400/20 to-red-400/20 rounded-3xl blur-2xl"></div>
             <div className="relative bg-white/70 backdrop-blur-sm rounded-3xl p-12 border border-yellow-200/50 shadow-xl">
               <div className="text-center mb-8">
-                <div className="inline-flex items-center justify-center p-4 rounded-2xl bg-gradient-to-br from-yellow-500 to-orange-500 text-white mb-6">
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2, duration: 0.5 }}
+                  className="inline-flex items-center justify-center p-4 rounded-2xl bg-gradient-to-br from-yellow-500 to-orange-500 text-white mb-6"
+                >
                   <Lightbulb className="w-8 h-8" />
-                </div>
+                </motion.div>
                 <h2 className="text-4xl font-black bg-gradient-to-r from-yellow-600 to-orange-600 bg-clip-text text-transparent mb-6">
                   The Spark
                 </h2>
@@ -186,51 +250,77 @@ export default function ModernAboutPage() {
                 <div className="grid md:grid-cols-3 gap-6 mt-12">
                   {["Creating", "Collaborating", "Building"].map(
                     (word, index) => (
-                      <div
+                      <motion.div
                         key={index}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: index * 0.1 + 0.3, duration: 0.5 }}
                         className="text-center p-6 bg-gradient-to-br from-yellow-50 to-orange-50 rounded-2xl border border-yellow-200/50"
                       >
                         <div className="text-3xl font-black bg-gradient-to-r from-yellow-600 to-orange-600 bg-clip-text text-transparent">
                           {word}
                         </div>
-                      </div>
+                      </motion.div>
                     )
                   )}
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* What Makes Us Different */}
       <section className="py-24 px-6" data-section="3">
         <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-purple-100 to-pink-100 border border-purple-200/50 mb-6">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={containerVariants}
+            className="text-center mb-16"
+          >
+            <motion.div
+              variants={itemVariants}
+              className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-purple-100 to-pink-100 border border-purple-200/50 mb-6"
+            >
               <Target className="w-4 h-4 text-purple-600 mr-2" />
               <span className="text-sm font-semibold text-purple-800">
                 Our Differentiators
               </span>
-            </div>
+            </motion.div>
 
-            <h2 className="text-4xl font-black text-slate-800 mb-6">
+            <motion.h2
+              variants={itemVariants}
+              className="text-4xl font-black text-slate-800 mb-6"
+            >
               What Makes Us{" "}
               <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                 Different
               </span>
-            </h2>
+            </motion.h2>
 
-            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+            <motion.p
+              variants={itemVariants}
+              className="text-xl text-slate-600 max-w-3xl mx-auto"
+            >
               Three core principles that set i3Hub apart from traditional coding
               education
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
 
-          <div className="grid lg:grid-cols-3 gap-8">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={containerVariants}
+            className="grid lg:grid-cols-3 gap-8"
+          >
             {differentiators.map((item, index) => (
-              <div
+              <motion.div
                 key={index}
+                variants={itemVariants}
                 className={`group relative p-8 bg-gradient-to-br ${item.bgGradient} backdrop-blur-sm rounded-3xl border border-white/50 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 overflow-hidden`}
               >
                 {/* Hover gradient overlay */}
@@ -260,19 +350,25 @@ export default function ModernAboutPage() {
                     <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* CTA Section */}
       <section className="py-24 px-6" data-section="4">
         <div className="container mx-auto max-w-4xl">
-          <div className="relative">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={containerVariants}
+            className="relative"
+          >
             <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 via-purple-600/20 to-pink-600/20 rounded-3xl blur-2xl"></div>
             <div className="relative bg-white/70 backdrop-blur-sm rounded-3xl p-12 border border-white/50 shadow-xl text-center">
-              <div className="mb-8">
+              <motion.div variants={itemVariants} className="mb-8">
                 <h2 className="text-4xl font-black text-slate-800 mb-6">
                   Ready to Learn{" "}
                   <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
@@ -295,9 +391,12 @@ export default function ModernAboutPage() {
                   </span>{" "}
                   over memorization and frustration.
                 </p>
-              </div>
+              </motion.div>
 
-              <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+              <motion.div
+                variants={itemVariants}
+                className="flex flex-col sm:flex-row gap-6 justify-center items-center"
+              >
                 <button className="group relative px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold rounded-2xl hover:shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 hover:scale-105">
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   <div className="relative flex items-center">
@@ -313,9 +412,9 @@ export default function ModernAboutPage() {
                     Explore Tools
                   </div>
                 </button>
-              </div>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
     </div>

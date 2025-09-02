@@ -1,4 +1,7 @@
-import React from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
+import { motion, Variants } from "framer-motion";
 import {
   Play,
   Youtube,
@@ -10,7 +13,70 @@ import {
 } from "lucide-react";
 import { FiArrowRight, FiYoutube } from "react-icons/fi";
 
+// Animation variants
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const fadeInVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: [0.42, 0, 0.58, 1], // ✅ cubic-bezier
+    },
+  },
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut", // ✅ corrected
+    },
+  },
+};
+
 export default function ModernVideosPage() {
+  const [activeSection, setActiveSection] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    setIsVisible(true);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = parseInt(
+              (entry.target as HTMLElement).dataset.section || "0"
+            );
+            setActiveSection(index);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    document.querySelectorAll("[data-section]").forEach((el) => {
+      observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   const videoCategories = [
     {
       icon: <Sparkles className="w-12 h-12" />,
@@ -131,33 +197,47 @@ export default function ModernVideosPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
       <div className="container mx-auto px-6 py-20 max-w-7xl">
-        {/* Animated Hero Section */}
-        <div className="text-center mb-20 relative">
+        {/* Hero Section */}
+        <motion.div
+          variants={fadeInVariants}
+          initial="hidden"
+          animate={isVisible ? "visible" : "hidden"}
+          className="text-center mb-20 relative"
+        >
           <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-cyan-600/10 rounded-3xl blur-3xl"></div>
           <div className="relative">
-            <div className="inline-block mb-4">
-              <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent text-sm font-semibold tracking-wide uppercase">
-                Learn with AI
-              </span>
+            <div>
+              <div className="inline-block mb-4">
+                <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent text-sm font-semibold tracking-wide uppercase">
+                  Learn with AI
+                </span>
+              </div>
+              <h1 className="text-5xl md:text-7xl font-black bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 bg-clip-text text-transparent mb-8 leading-tight">
+                Video Library
+              </h1>
+              <p className="text-xl md:text-2xl text-slate-600 max-w-4xl mx-auto leading-relaxed">
+                Master AI-assisted development through{" "}
+                <span className="font-semibold text-slate-800">
+                  project-based video tutorials
+                </span>
+                —no memorization required.
+              </p>
             </div>
-            <h1 className="text-5xl md:text-7xl font-black bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 bg-clip-text text-transparent mb-8 leading-tight">
-              Video Library
-            </h1>
-            <p className="text-xl md:text-2xl text-slate-600 max-w-4xl mx-auto leading-relaxed">
-              Master AI-assisted development through{" "}
-              <span className="font-semibold text-slate-800">
-                project-based video tutorials
-              </span>
-              —no memorization required.
-            </p>
           </div>
-        </div>
+        </motion.div>
 
         {/* Stats Section */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16"
+        >
           {stats.map((stat, index) => (
-            <div
+            <motion.div
               key={index}
+              variants={itemVariants}
               className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 text-center border border-white/50 shadow-lg hover:shadow-xl transition-shadow duration-300"
             >
               <div
@@ -169,23 +249,27 @@ export default function ModernVideosPage() {
                 {stat.value}
               </div>
               <div className="text-sm text-slate-600">{stat.label}</div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
-        {/* Video Categories Grid */}
-        <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-8 mb-24">
+        {/* Video Categories */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid lg:grid-cols-3 md:grid-cols-2 gap-8 mb-24"
+        >
           {videoCategories.map((category, index) => (
-            <div
+            <motion.div
               key={index}
+              variants={fadeInVariants}
               className={`group relative p-8 bg-gradient-to-br ${category.bgGradient} backdrop-blur-sm rounded-3xl border border-white/50 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden`}
             >
-              {/* Animated background gradient */}
               <div
                 className={`absolute inset-0 bg-gradient-to-br ${category.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}
               ></div>
-
-              {/* Status badge (moved to top-right) */}
               <div
                 className={`absolute top-4 right-4 inline-flex px-4 py-1.5 rounded-lg ${
                   category.status === "Available Now"
@@ -195,24 +279,18 @@ export default function ModernVideosPage() {
               >
                 {category.status}
               </div>
-
               <div className="relative z-10">
-                {/* Icon with gradient */}
                 <div
                   className={`inline-flex p-3 rounded-2xl bg-gradient-to-br ${category.gradient} text-white mb-6 group-hover:scale-110 transition-transform duration-300`}
                 >
                   {category.icon}
                 </div>
-
                 <h2 className="text-2xl font-bold text-slate-800 mb-4 group-hover:text-slate-900 transition-colors">
                   {category.title}
                 </h2>
-
                 <p className="text-slate-600 mb-6 leading-relaxed">
                   {category.description}
                 </p>
-
-                {/* Link/CTA */}
                 {category.link && (
                   <a
                     href={category.link}
@@ -226,12 +304,18 @@ export default function ModernVideosPage() {
                   </a>
                 )}
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
-        {/* Learning Paths Section */}
-        <div className="relative mb-20">
+        {/* Learning Paths */}
+        <motion.div
+          variants={fadeInVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="relative mb-20"
+        >
           <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 rounded-3xl blur-2xl"></div>
           <div className="relative bg-white/70 backdrop-blur-sm rounded-3xl border border-white/50 p-12 shadow-xl">
             <div className="text-center mb-12">
@@ -243,22 +327,21 @@ export default function ModernVideosPage() {
                 mastery
               </p>
             </div>
-
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
               {learningPaths.map((path, index) => (
-                <div key={index} className="text-center group">
+                <motion.div
+                  key={index}
+                  variants={itemVariants}
+                  className="text-center group"
+                >
                   <div className="relative mb-6">
-                    {/* Step number */}
                     <div className="inline-flex w-16 h-16 items-center justify-center rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 text-slate-800 font-bold text-lg mb-4 group-hover:scale-110 transition-transform duration-200">
                       {path.number}
                     </div>
-
-                    {/* Connecting line */}
                     {index < learningPaths.length - 1 && (
                       <div className="hidden lg:block absolute top-8 left-full w-full h-0.5 bg-gradient-to-r from-indigo-200 to-purple-200 -z-10"></div>
                     )}
                   </div>
-
                   <div className="flex items-center justify-center mb-3">
                     <div
                       className={`p-2 rounded-xl bg-gradient-to-br ${path.gradient} text-white`}
@@ -266,21 +349,26 @@ export default function ModernVideosPage() {
                       {path.icon}
                     </div>
                   </div>
-
                   <h3 className="text-xl font-bold text-slate-800 mb-2">
                     {path.title}
                   </h3>
                   <p className="text-slate-600 text-sm leading-relaxed">
                     {path.description}
                   </p>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Newsletter CTA */}
-        <div className="relative bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl p-12 text-center text-white shadow-2xl">
+        <motion.div
+          variants={fadeInVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="relative bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl p-12 text-center text-white shadow-2xl"
+        >
           <div className="absolute inset-0 bg-white/10 rounded-3xl backdrop-blur-sm"></div>
           <div className="relative z-10">
             <h2 className="text-3xl font-bold mb-4">Get Early Access</h2>
@@ -299,10 +387,16 @@ export default function ModernVideosPage() {
               </button>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* YouTube CTA */}
-        <div className="text-center mt-16">
+        <motion.div
+          variants={fadeInVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="text-center mt-16"
+        >
           <a
             href="https://www.youtube.com/@i3hub.official"
             target="_blank"
@@ -313,7 +407,7 @@ export default function ModernVideosPage() {
             Start Learning on YouTube
             <ArrowRight className="w-5 h-5 ml-3" />
           </a>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
