@@ -236,7 +236,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* Call to Action Section */}
       <section className="py-16 sm:py-20" data-section="cta">
         <div
