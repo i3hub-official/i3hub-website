@@ -43,8 +43,32 @@ export const metadata: Metadata = {
     apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
   },
   manifest: "/site.webmanifest",
-};
 
+  // Social previews
+  openGraph: {
+    title: "i3Hub - Learn to Code with AI",
+    description:
+      "Stop memorizing code. Start building with AI as your pair programmer.",
+    url: "https://i3hub.vercel.app",
+    siteName: "i3Hub",
+    images: [
+      {
+        url: "/og-image.png", // put this in /public
+        width: 500,
+        height: 500,
+        alt: "i3Hub Logo",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "i3Hub - Learn to Code with AI",
+    description:
+      "Stop memorizing code. Start building with AI as your pair programmer.",
+    images: ["/og-image.png"], // same image as above
+  },
+};
 export default function RootLayout({
   children,
 }: Readonly<{
