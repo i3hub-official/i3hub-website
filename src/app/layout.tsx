@@ -1,7 +1,14 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
-import Image from "next/image"; // Import Next.js Image component
+import Image from "next/image";
+import {
+  FiYoutube,
+  FiGithub,
+  FiTwitter,
+  FiMessageCircle,
+  FiArrowRight,
+} from "react-icons/fi";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -28,39 +35,38 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100`}
       >
-        {/* Header with primary brand color */}
-        <header className="bg-primary text-white p-4 sticky top-0 z-50">
-          <nav className="container mx-auto flex justify-between items-center">
-            <Link href="/" className="flex items-center space-x-2">
-              {/* Logo with text */}
+        {/* Header */}
+        <header className="bg-white/80 backdrop-blur-sm border-b border-white/20 sticky top-0 z-50">
+          <nav className="container mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
+            <Link href="/" className="flex items-center space-x-3 group">
               <Image
-                src="/logo.png"
+                src="/logo_black.png"
                 alt="i3Hub Logo"
-                width={120}
-                height={120}
-                className="h-15 w-auto"
+                width={40}
+                height={40}
+                className="h-8 sm:h-10 w-auto transition-transform duration-300 group-hover:scale-110"
+                priority
               />
-              {/* <span className="text-xl font-bold">i3Hub</span> */}
             </Link>
 
-            <div className="space-x-6">
+            <div className="flex space-x-4 sm:space-x-6 md:space-x-8">
               <Link
                 href="/videos"
-                className="hover:text-secondary transition-colors"
+                className="text-slate-700 hover:text-blue-600 transition-colors duration-300 font-medium text-sm sm:text-base hover:scale-105"
               >
                 Videos
               </Link>
               <Link
                 href="/tools"
-                className="hover:text-secondary transition-colors"
+                className="text-slate-700 hover:text-blue-600 transition-colors duration-300 font-medium text-sm sm:text-base hover:scale-105"
               >
                 Tools
               </Link>
               <Link
                 href="/about"
-                className="hover:text-secondary transition-colors"
+                className="text-slate-700 hover:text-blue-600 transition-colors duration-300 font-medium text-sm sm:text-base hover:scale-105"
               >
                 About
               </Link>
@@ -68,60 +74,126 @@ export default function RootLayout({
           </nav>
         </header>
 
-        {/* Main content area */}
+        {/* Main content - no forced padding, let pages control spacing */}
         <main className="flex-grow">{children}</main>
 
-        {/* Footer with black brand color */}
-        <footer className="bg-black text-white p-8 text-center">
-          <div className="container mx-auto">
-            {/* Footer Logo */}
-            <div className="flex justify-center mb-4">
-              <Image
-                src="/logo.png"
-                alt="i3Hub Logo"
-                width={60}
-                height={60}
-                className="h-15 w-auto"
-              />
+        {/* Footer */}
+        <footer className="bg-gradient-to-r from-slate-900 to-blue-900 text-white">
+          <div className="container mx-auto px-4 sm:px-6 py-10 sm:py-14">
+            <div className="grid md:grid-cols-3 gap-10 text-center">
+              {/* Brand */}
+              <div className="flex flex-col items-center">
+                <Image
+                  src="/logo.png"
+                  alt="i3Hub Logo"
+                  width={64}
+                  height={64}
+                  className="h-12 sm:h-16 w-auto mb-4"
+                />
+                <p className="text-blue-200 text-base sm:text-lg mb-3">
+                  Innovate · Integrate · Inspire
+                </p>
+                <p className="text-blue-300 text-sm max-w-sm">
+                  Transforming how developers learn and build with AI-assisted
+                  coding. No memorization—just creation.
+                </p>
+              </div>
+
+              {/* Explore */}
+              <div className="flex flex-col items-center">
+                <h3 className="text-white font-semibold mb-4 sm:mb-6 text-base sm:text-lg">
+                  Explore
+                </h3>
+                <div className="space-y-3">
+                  <Link
+                    href="/videos"
+                    className="flex items-center justify-center text-blue-300 hover:text-white transition-colors duration-300 group text-sm sm:text-base"
+                  >
+                    <FiArrowRight className="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    Videos
+                  </Link>
+                  <Link
+                    href="/tools"
+                    className="flex items-center justify-center text-blue-300 hover:text-white transition-colors duration-300 group text-sm sm:text-base"
+                  >
+                    <FiArrowRight className="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    Tools
+                  </Link>
+                  <Link
+                    href="/about"
+                    className="flex items-center justify-center text-blue-300 hover:text-white transition-colors duration-300 group text-sm sm:text-base"
+                  >
+                    <FiArrowRight className="w-4 h-4 mr-2 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    About
+                  </Link>
+                </div>
+              </div>
+
+              {/* Connect */}
+              <div className="flex flex-col items-center">
+                <h3 className="text-white font-semibold mb-4 sm:mb-6 text-base sm:text-lg">
+                  Connect
+                </h3>
+                <div className="grid grid-cols-2 gap-4">
+                  <a
+                    href="https://www.youtube.com/@i3hub.official"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center space-x-2 p-3 bg-blue-800/50 rounded-lg hover:bg-blue-700 transition-all duration-300 text-sm"
+                    aria-label="YouTube"
+                  >
+                    <FiYoutube className="w-5 h-5" />
+                    <span>YouTube</span>
+                  </a>
+                  <a
+                    href="https://github.com/orgs/i3hub-official"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center space-x-2 p-3 bg-blue-800/50 rounded-lg hover:bg-blue-700 transition-all duration-300 text-sm"
+                    aria-label="GitHub"
+                  >
+                    <FiGithub className="w-5 h-5" />
+                    <span>GitHub</span>
+                  </a>
+                  <a
+                    href="https://x.com/i3hubofficial"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center space-x-2 p-3 bg-blue-800/50 rounded-lg hover:bg-blue-700 transition-all duration-300 text-sm"
+                    aria-label="Twitter"
+                  >
+                    <FiTwitter className="w-5 h-5" />
+                    <span>Twitter</span>
+                  </a>
+                  <a
+                    href="https://discord.gg/EQyx535Bv3"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center space-x-2 p-3 bg-blue-800/50 rounded-lg hover:bg-blue-700 transition-all duration-300 text-sm"
+                    aria-label="Discord"
+                  >
+                    <FiMessageCircle className="w-5 h-5" />
+                    <span>Discord</span>
+                  </a>
+                </div>
+              </div>
             </div>
 
-            {/* <p className="text-lg font-semibold mb-2">i3Hub</p> */}
-            <p className="text-secondary mb-4">
-              Innovate · Integrate · Inspire
-            </p>
-            <div className="flex justify-center space-x-6 mb-4">
-              <a
-                href="https://www.youtube.com/@i3hub.official"
-                className="hover:text-primary transition-colors"
-                aria-label="YouTube"
-              >
-                YouTube
-              </a>
-              <Link
-                href="https://github.com/orgs/i3hub-official"
-                className="hover:text-primary transition-colors"
-                aria-label="GitHub"
-              >
-                GitHub
-              </Link>
-              <Link
-                href="https://x.com/i3hubofficial"
-                className="hover:text-primary transition-colors"
-                aria-label="Twitter"
-              >
-                Twitter
-              </Link>
-              <Link
-                href="https://discord.gg/EQyx535Bv3"
-                className="hover:text-primary transition-colors"
-                aria-label="Discord"
-              >
-                Discord
-              </Link>
+            {/* Bottom bar */}
+            <div className="border-t border-blue-800 mt-10 pt-6 flex flex-col md:flex-row justify-between items-center">
+              <p className="text-blue-400 text-xs sm:text-sm">
+                © {new Date().getFullYear()} i3Hub. All rights reserved.
+              </p>
+              <div className="flex items-center space-x-2 mt-3 md:mt-0">
+                <span className="text-blue-400 text-xs sm:text-sm">
+                  Made with
+                </span>
+                <div className="w-1 h-1 bg-red-400 rounded-full animate-pulse"></div>
+                <span className="text-blue-400 text-xs sm:text-sm">
+                  for developers
+                </span>
+              </div>
             </div>
-            <p className="text-sm text-gray-400">
-              © {new Date().getFullYear()} i3Hub. All rights reserved.
-            </p>
           </div>
         </footer>
       </body>

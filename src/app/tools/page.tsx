@@ -1,165 +1,130 @@
-import Link from "next/link";
+import React from "react";
+import {
+  Video,
+  Youtube,
+  Sparkles,
+  ArrowRight,
+  ExternalLink,
+} from "lucide-react";
 
-export default function ToolsPage() {
+export default function VideosPage() {
+  const videos = [
+    {
+      icon: <Video className="w-12 h-12" />,
+      title: "Getting Started with AI Coding",
+      description:
+        "Kick off your journey with the fundamentals of AI-assisted coding.",
+      link: "https://www.youtube.com/@i3hub.official",
+      linkText: "Watch on YouTube",
+      gradient: "from-red-500 to-orange-500",
+      bgGradient: "from-red-50 to-orange-50",
+    },
+    {
+      icon: <Youtube className="w-12 h-12" />,
+      title: "AI + Web Development",
+      description:
+        "Learn how to integrate AI tools directly into your dev workflow.",
+      link: "https://www.youtube.com/@i3hub.official",
+      linkText: "Watch on YouTube",
+      gradient: "from-blue-500 to-cyan-500",
+      bgGradient: "from-blue-50 to-cyan-50",
+    },
+    {
+      icon: <Sparkles className="w-12 h-12" />,
+      title: "More Videos Coming Soon",
+      description:
+        "We&apos;re preparing hands-on tutorials to take your coding to the next level.",
+      note: "Stay tuned!",
+      gradient: "from-purple-500 to-pink-500",
+      bgGradient: "from-purple-50 to-pink-50",
+    },
+  ];
+
   return (
-    <div className="container mx-auto p-8">
-      <h1 className="text-3xl font-bold mb-6 text-primary">Essential Tools</h1>
-      <p className="text-lg mb-8">
-        Your setup to start building with AI. No memorization required.
-      </p>
-
-      <div className="grid md:grid-cols-2 gap-6">
-        {/* Tool 1 */}
-        <div className="p-6 border rounded-lg shadow-sm hover:shadow-md transition-shadow">
-          <h2 className="text-xl font-semibold mb-3 text-secondary">
-            Visual Studio Code
-          </h2>
-          <p className="mb-4">
-            Your mission control for code. Free, powerful, and extensible.
-          </p>
-          <Link
-            href="https://code.visualstudio.com/"
-            className="text-primary hover:underline font-medium"
-          >
-            Download VSCode →
-          </Link>
-        </div>
-
-        {/* Tool 2 */}
-        <div className="p-6 border rounded-lg shadow-sm hover:shadow-md transition-shadow">
-          <h2 className="text-xl font-semibold mb-3 text-secondary">
-            AI Assistant
-          </h2>
-          <p className="mb-4">Your pair programmer. Choose your weapon:</p>
-          <ul className="list-disc list-inside space-y-1 mb-4">
-            <li>
-              <Link
-                href="https://chat.openai.com/"
-                className="text-primary hover:underline"
-              >
-                ChatGPT
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="https://claude.ai/"
-                className="text-primary hover:underline"
-              >
-                Claude
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="https://github.com/features/copilot"
-                className="text-primary hover:underline"
-              >
-                GitHub Copilot
-              </Link>
-            </li>
-          </ul>
-        </div>
-
-        {/* Tool 3 - UPDATED: GitHub Desktop */}
-        <div className="p-6 border rounded-lg shadow-sm hover:shadow-md transition-shadow">
-          <h2 className="text-xl font-semibold mb-3 text-secondary">
-            GitHub Desktop
-          </h2>
-          <p className="mb-4">
-            The visual way to work with Git. Perfect for beginners—no command
-            line memorization needed!
-          </p>
-          <ul className="list-disc list-inside space-y-1 mb-4 text-sm">
-            <li>Easy version control with clicks instead of commands</li>
-            <li>Visualize changes before committing</li>
-            <li>Simple branching and merging</li>
-          </ul>
-          <Link
-            href="https://desktop.github.com/"
-            className="text-primary hover:underline font-medium"
-          >
-            Download GitHub Desktop →
-          </Link>
-        </div>
-
-        {/* Tool 4 - Keep Git as reference */}
-        <div className="p-6 border rounded-lg shadow-sm hover:shadow-md transition-shadow">
-          <h2 className="text-xl font-semibold mb-3 text-secondary">
-            Git (Optional)
-          </h2>
-          <p className="mb-4">
-            The underlying version control system. GitHub Desktop uses this, but
-            you don&apos;t need to install it separately.
-          </p>
-          <p className="text-sm text-gray-600 mb-4">
-            ℹ️ GitHub Desktop includes Git automatically. Only install this
-            separately if you want to use the command line.
-          </p>
-          <Link
-            href="https://git-scm.com/"
-            className="text-primary hover:underline font-medium"
-          >
-            Install Git (CLI) →
-          </Link>
-        </div>
-
-        {/* Tool 5 */}
-        <div className="p-6 border rounded-lg shadow-sm hover:shadow-md transition-shadow">
-          <h2 className="text-xl font-semibold mb-3 text-secondary">Browser</h2>
-          <p className="mb-4">
-            Chrome or Edge for testing and developer tools.
-          </p>
-          <div className="flex space-x-4 mt-3">
-            <Link
-              href="https://www.google.com/chrome/"
-              className="text-primary hover:underline text-sm"
-            >
-              Chrome
-            </Link>
-            <Link
-              href="https://www.microsoft.com/edge"
-              className="text-primary hover:underline text-sm"
-            >
-              Edge
-            </Link>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+      <div className="container mx-auto px-6 py-20 max-w-7xl">
+        {/* Hero Section */}
+        <div className="text-center mb-20 relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-red-600/10 via-purple-600/10 to-cyan-600/10 rounded-3xl blur-3xl"></div>
+          <div className="relative">
+            <div className="inline-block mb-4">
+              <span className="bg-gradient-to-r from-red-600 to-purple-600 bg-clip-text text-transparent text-sm font-semibold tracking-wide uppercase">
+                Learn with Video
+              </span>
+            </div>
+            <h1 className="text-5xl md:text-7xl font-black bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 bg-clip-text text-transparent mb-8 leading-tight">
+              i3Hub Videos
+            </h1>
+            <p className="text-xl md:text-2xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+              Explore tutorials, walkthroughs, and coding sessions—powered by{" "}
+              <span className="font-semibold text-slate-800">
+                AI collaboration
+              </span>
+              .
+            </p>
           </div>
         </div>
 
-        {/* Empty card for grid balance or add another tool later */}
-        <div className="p-6 border rounded-lg shadow-sm hover:shadow-md transition-shadow">
-          <h2 className="text-xl font-semibold mb-3 text-secondary">
-            More to Come
-          </h2>
-          <p className="mb-4">
-            As we build together, I&apos;ll share more tools and extensions that
-            enhance the AI coding workflow.
-          </p>
-          <p className="text-primary font-medium">Stay tuned!</p>
-        </div>
-      </div>
+        {/* Videos Grid */}
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-8 mb-24">
+          {videos.map((video, index) => (
+            <div
+              key={index}
+              className={`group relative p-8 bg-gradient-to-br ${video.bgGradient} backdrop-blur-sm rounded-3xl border border-white/50 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden`}
+            >
+              {/* Background hover gradient */}
+              <div
+                className={`absolute inset-0 bg-gradient-to-br ${video.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}
+              ></div>
 
-      {/* Workflow Explanation */}
-      <div className="mt-12 p-6 bg-primary/5 rounded-lg border border-primary/20">
-        <h2 className="text-2xl font-semibold mb-4 text-primary">
-          Recommended Workflow
-        </h2>
-        <ol className="list-decimal list-inside space-y-3">
-          <li className="font-medium">
-            Use <span className="text-secondary">VSCode</span> as your main
-            coding environment
-          </li>
-          <li className="font-medium">
-            Keep your <span className="text-secondary">AI Assistant</span> open
-            in a browser tab for quick questions
-          </li>
-          <li className="font-medium">
-            Use <span className="text-secondary">GitHub Desktop</span> to save
-            and manage your project versions
-          </li>
-          <li className="font-medium">
-            Test your projects in your{" "}
-            <span className="text-secondary">browser</span>
-          </li>
-        </ol>
+              <div className="relative z-10">
+                {/* Icon */}
+                <div
+                  className={`inline-flex p-3 rounded-2xl bg-gradient-to-br ${video.gradient} text-white mb-6 group-hover:scale-110 transition-transform duration-300`}
+                >
+                  {video.icon}
+                </div>
+
+                <h2 className="text-2xl font-bold text-slate-800 mb-4 group-hover:text-slate-900 transition-colors">
+                  {video.title}
+                </h2>
+
+                <p className="text-slate-600 mb-6 leading-relaxed">
+                  {video.description}
+                </p>
+
+                {/* Note */}
+                {video.note && (
+                  <p className="text-sm text-slate-500 mb-6 italic">
+                    {video.note}
+                  </p>
+                )}
+
+                {/* Link */}
+                {video.link && (
+                  <a
+                    href={video.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`inline-flex items-center px-6 py-3 rounded-xl bg-gradient-to-r ${video.gradient} text-white font-semibold hover:shadow-lg transition-all duration-200 hover:scale-105 group/link`}
+                  >
+                    {video.linkText}
+                    <ExternalLink className="w-4 h-4 ml-2 group-hover/link:translate-x-1 transition-transform" />
+                  </a>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Call to Action */}
+        <div className="text-center mt-16">
+          <div className="inline-flex items-center px-8 py-4 rounded-2xl bg-gradient-to-r from-red-600 to-purple-600 text-white font-semibold text-lg hover:shadow-xl transition-all duration-200 hover:scale-105 cursor-pointer">
+            <Sparkles className="w-5 h-5 mr-3" />
+            Subscribe for upcoming tutorials
+            <ArrowRight className="w-5 h-5 ml-3" />
+          </div>
+        </div>
       </div>
     </div>
   );
