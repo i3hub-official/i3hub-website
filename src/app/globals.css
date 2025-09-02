@@ -3,6 +3,15 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  /* Define your i3Hub brand colors as CSS variables */
+  --color-primary: #0097CF;
+  --color-primary-dark: #007cad;
+  --color-secondary: #FBA925;
+  --color-secondary-dark: #e5940c;
+  --color-accent: #D33C59;
+  --color-accent-dark: #b52c48;
+  --color-white: #ffffff;
+  --color-black: #000000;
 }
 
 @theme inline {
@@ -10,14 +19,23 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  
+  /* Map your CSS variables to Tailwind's semantic color names */
+  --color-primary: var(--color-primary);
+  --color-primary-dark: var(--color-primary-dark);
+  --color-secondary: var(--color-secondary);
+  --color-secondary-dark: var(--color-secondary-dark);
+  --color-accent: var(--color-accent);
+  --color-accent-dark: var(--color-accent-dark);
 }
 
-@media (prefers-color-scheme: dark) {
+/* (Optional) Dark mode support based on your preferences */
+/* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
-}
+} */
 
 body {
   background: var(--background);
