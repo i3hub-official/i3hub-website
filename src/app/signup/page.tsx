@@ -396,7 +396,7 @@ export default function SignupPage() {
               <div className="text-center text-sm text-slate-600">
                 Already have an account?{" "}
                 <a
-                  href="#"
+                  href="/signin"
                   className="font-medium text-blue-600 hover:text-blue-500"
                 >
                   Sign in

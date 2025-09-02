@@ -29,7 +29,6 @@ const containerVariants: Variants = {
   },
 };
 
-
 const itemVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
@@ -173,7 +172,7 @@ export default function LoginPage() {
                   <div className="w-full border-t border-slate-300"></div>
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-transparent text-slate-500">
+                  <span className="px-2 mt-5 bg-transparent text-slate-500">
                     Or continue with email
                   </span>
                 </div>
@@ -279,7 +278,7 @@ export default function LoginPage() {
 
                 <div className="text-sm">
                   <a
-                    href="#"
+                    href="/forgotpassword"
                     className="font-medium text-blue-600 hover:text-blue-500"
                   >
                     Forgot your password?
@@ -330,7 +329,7 @@ export default function LoginPage() {
               <div className="text-center text-sm text-slate-600">
                 Don&apos;t have an account?{" "}
                 <a
-                  href="#"
+                  href="/signup"
                   className="font-medium text-blue-600 hover:text-blue-500"
                 >
                   Sign up
