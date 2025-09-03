@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   turbopack: {
-    root: "./", // relative path to your Next.js root
+    root: "C:\\Users\\ogwog\\Source\\Repos\\Project\\Web Applications\\Community\\i3hub-website", // relative path to your Next.js root
   },
   images: {
     remotePatterns: [
