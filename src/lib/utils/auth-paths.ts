@@ -8,12 +8,14 @@ export const PUBLIC_PATHS = [
 ] as const;
 
 export const PRIVATE_PATHS = [
-  "/agent/profile",
-  "/agent/profile/*",
-  "/agent/dashboard",
-  "/agent/dashboard/*",
-  "api/agent/auth",
-  "api/agent/auth/*",
+  "/profile",
+  "/profile/*",
+  "/dashboard",
+  "/dashboard/*",
+  "api/auth",
+  "api/auth/*",
+  "/resources",
+  "/resources/*",
 ] as const;
 
 export const AUTH_PATHS = ["/signin", "/signup"] as const;

@@ -17,5 +17,5 @@ export function withAuthRedirect(request: NextRequest): NextResponse {
   }
 
   // token exists → redirect to dashboard
-  return NextResponse.redirect(new URL("/agent/profile", request.url));
+  return NextResponse.redirect(new URL("/agent/dashboard", request.url));
 }

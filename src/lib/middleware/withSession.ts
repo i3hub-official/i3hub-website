@@ -14,7 +14,7 @@ export async function withSession(request: NextRequest): Promise<NextResponse> {
     console.log(
       `[Middleware] No session token, redirecting to signin: ${request.nextUrl.pathname}`
     );
-    return NextResponse.redirect(new URL("/agent/signin", request.url));
+    return NextResponse.redirect(new URL("/signin", request.url));
   }
 
   // Token exists → refresh cookies locally without DB validation
