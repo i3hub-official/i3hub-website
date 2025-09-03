@@ -3,8 +3,13 @@ export const PUBLIC_PATHS = [
   "/",
   "/sitemap",
   "/about",
-  "/tools",
-  "/videos",
+  "/about/*",
+  "/faq/",
+  "/faq/*",
+  "/help/",
+  "/help/*",
+  "/status",
+  "/status/*",
 ] as const;
 
 export const PRIVATE_PATHS = [
@@ -16,6 +21,10 @@ export const PRIVATE_PATHS = [
   "api/auth/*",
   "/resources",
   "/resources/*",
+    "/tools",
+    "/tools/*",
+  "/videos",
+  "/videos/*"
 ] as const;
 
 export const AUTH_PATHS = ["/signin", "/signup"] as const;
