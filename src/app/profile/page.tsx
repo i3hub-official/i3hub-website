@@ -64,7 +64,7 @@ const tabVariants: Variants = {
 
 export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
+  const [isUpdating, setisUpdating] = useState(false);
   const [activeTab, setActiveTab] = useState("overview");
   const [showNotification, setShowNotification] = useState(false);
   const [notification, setNotification] = useState({ message: "", type: "" });
@@ -222,15 +222,15 @@ export default function ProfilePage() {
     setIsEditing(true);
   };
 
-  const handleSave = () => {
-    setIsSaving(true);
+  const handleUpdate = () => {
+    setisUpdating(true);
 
     // Simulate API call
     setTimeout(() => {
       setUserData({ ...tempUserData });
       setSocialLinks({ ...tempSocialLinks });
       setIsEditing(false);
-      setIsSaving(false);
+      setisUpdating(false);
       showToast("Profile updated successfully!");
     }, 1500);
   };
@@ -348,6 +348,41 @@ export default function ProfilePage() {
 
             {/* Profile Content - Fixed positioning issue */}
             <div className="px-6 pb-6 relative">
+              {/* Mobile Edit/Save/Cancel Buttons - Positioned absolutely on mobile */}
+              <div className="block md:hidden absolute right-6 top-4 z-10">
+                {isEditing ? (
+                  <div className="flex flex-col space-y-2 items-end">
+                    <button
+                      onClick={handleUpdate}
+                      disabled={isUpdating}
+                      className="bg-blue-600 text-white px-3 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors flex items-center disabled:opacity-50 text-sm shadow-md"
+                    >
+                      {isUpdating ? (
+                        <Loader2 className="w-4 h-4 mr-1 animate-spin" />
+                      ) : (
+                        <Save className="w-4 h-4 mr-1" />
+                      )}
+                      {isUpdating ? "Update" : "Update"}
+                    </button>
+                    <button
+                      onClick={handleCancel}
+                      disabled={isUpdating}
+                      className="bg-slate-200 text-slate-700 px-3 py-2 rounded-lg font-medium hover:bg-slate-300 transition-colors flex items-center disabled:opacity-50 text-sm shadow-md"
+                    >
+                      <X className="w-4 h-4 mr-1" />
+                      Cancel
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    onClick={handleEdit}
+                    className="bg-white text-black px-3 py-2 border border-slate-300 rounded-lg font-medium hover:bg-blue-700 hover:text-white transition-colors flex items-center text-sm shadow-md"
+                  >
+                    <Edit3 className="w-4 h-4" />
+                  </button>
+                )}
+              </div>
+
               <div className="flex flex-col lg:flex-row lg:items-end pt-16">
                 {/* Avatar */}
                 <div className="relative flex-shrink-0">
@@ -428,24 +463,24 @@ export default function ProfilePage() {
                       )}
                     </div>
 
-                    <div className="flex space-x-2 mt-4 lg:mt-6 lg:flex-shrink-0">
+                    <div className="hidden md:flex space-x-2 mt-4 lg:mt-6 lg:flex-shrink-0">
                       {isEditing ? (
                         <>
                           <button
-                            onClick={handleSave}
-                            disabled={isSaving}
+                            onClick={handleUpdate}
+                            disabled={isUpdating}
                             className="bg-blue-600 text-white px-3 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors flex items-center disabled:opacity-50 text-sm"
                           >
-                            {isSaving ? (
+                            {isUpdating ? (
                               <Loader2 className="w-4 h-4 mr-1 animate-spin" />
                             ) : (
                               <Save className="w-4 h-4 mr-1" />
                             )}
-                            {isSaving ? "Saving" : "Save"}
+                            {isUpdating ? "Updating" : "Update"}
                           </button>
                           <button
                             onClick={handleCancel}
-                            disabled={isSaving}
+                            disabled={isUpdating}
                             className="bg-slate-200 text-slate-700 px-3 py-2 rounded-lg font-medium hover:bg-slate-300 transition-colors flex items-center disabled:opacity-50 text-sm"
                           >
                             <X className="w-4 h-4 mr-1" />
