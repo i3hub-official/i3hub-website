@@ -41,7 +41,7 @@ const itemVariants: Variants = {
     y: 0,
     transition: {
       duration: 0.6,
-      ease: "easeOut", // ✅ string, not array
+      ease: "easeOut", 
     },
   },
 };
